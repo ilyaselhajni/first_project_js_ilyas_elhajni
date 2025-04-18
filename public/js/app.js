@@ -2,7 +2,7 @@
 let userDatabase = {};
 
 
-// functions
+// functions 
 function capitalizeName(name) {
     return name
         .split(" ")
@@ -67,4 +67,15 @@ if (action === "1" || action.toLowerCase() === "sign up") {
         
             alert("Password is valid.");
             console.log("Password: " + password);
+        
+            // confirm password
+            let confirmPassword = prompt("Confirm your password:");
+            while (confirmPassword !== password) {
+                alert("Passwords do not match.");
+                confirmPassword = prompt("Confirm your password again:");
+            }
+        
+            alert("Password confirmed.");
+            console.log("Confirmed Password: " + confirmPassword);
+
         }}
