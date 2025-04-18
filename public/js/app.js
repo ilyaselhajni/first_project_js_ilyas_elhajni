@@ -1,57 +1,70 @@
-    const action = prompt("Choose an option: \n -Sign Up \n -Log In \n -Change Password \n -exit" );
 
-    if (action === "exit") {
-        alert("Exiting the application.");
-            const newAction = prompt("Choose an option: \n1. Sign Up \n2. Log In \n3. Change Password \n4. exit");
+let userDatabase = {};
+
+
+// functions
+function capitalizeName(name) {
+    return name
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+}
+
+function isValidEmail(email) {
+    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return pattern.test(email);
+}
+
+function isValidPassword(password) {
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return pattern.test(password);
+}
+
+
+const action = prompt("Choose an option:\n1. Sign Up\n2. Log In\n3. Change Password\n4. Exit");
+
+
+if (action === "1" || action.toLowerCase() === "sign up") {
+    let fullName = prompt("Enter your full name:");
+
+    while (fullName.length < 5 || /[^a-zA-Z\s]/.test(fullName)) {
+        alert("Name must be at least 5 characters and contain only letters.");
+        fullName = prompt("Enter your full name again:");
     }
-    if (action === "Sign Up") {
-        const fullname = prompt("Enter your full name: ");
-        const capitalizedFullname = fullname
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');
-        if (fullname.length < 5) {
-            alert('Your name must contain a minimum of 5 characters.');
-            const fullname = prompt("Enter your full name: ");
-            console.log("Full name: " + fullname.trim());
-        }  else if (/[^a-zA-Z\s]/.test(fullname)){
-            alert('Your name must not contain numbers or special characters.');
-            const fullname = prompt("Enter your full name: ");
-        } else {
-            console.log("Full name: " + capitalizedFullname.trim());
-            alert('Your name is valid.');
-        }
-        const email = prompt("Enter your email: ");
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const lowwwermail = email
-            .split(' ')
-            .map(word => word.toLowerCase())
-            .join(' ');
-        if (emailRegex.test(email)) {
-            console.log("Email: " + lowwwermail.trim());
-            alert('Your email is valid.');
-        }
-        else if (email.length < 10) {
-            alert('Your email must contain a minimum of 10 characters.');
-            const email = prompt("Enter your email: ");
-            console.log("Email: " + lowwwermail.trim());
-        } 
-        else if (!email.includes('@')) {
-            alert('Your email must contain a domain name.');
-            const email = prompt("Enter your email: ");
-            console.log("Email: " + lowwwermail.trim());
-        }
-        else {
-            alert('Your email is invalid.');
-        }
 
-        const age = prompt("Enter your age: ");
-        if (isNaN(age) || age.trim().length === 0 || age.trim().length >= 3) {
-            alert('Your age must be a number and contain 1 or 2 characters.');
-            const age = prompt("Enter your age: ");
-        } else {
-            alert('Your age is valid.');
-            console.log("Age: " + age.trim());
-        }
+    fullName = capitalizeName(fullName);
+    alert("Valid name entered.");
+    console.log("Full Name:", fullName);
+
+    let email = prompt("Enter your email:");
+    while (!isValidEmail(email)) {
+        alert("Please enter a valid email.");
+        email = prompt("Enter your email again:");
         
     }
+    console.log("Email:", email);
+    alert("Valid email entered.");
+
+    email = email.trim().toLowerCase();
+
+    if (userDatabase[email]) {
+        alert("This email is already registered.");
+    } else {
+        let age = prompt("Enter your age:");
+        while (isNaN(age) || age.length === 0 || age.length >= 3) {
+            alert("Enter a valid age (1-2 digits).");
+            age = prompt("Enter your age again:");
+        }
+        console.log("Age:", age);
+        alert("Valid age entered.");
+
+        // password
+        let password = prompt("Enter your password:\n(Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number)");
+            while (isValidPassword(password)) {
+                alert("Invalid password format.");
+                password = prompt("Enter your password again:");
+            }
+        
+            alert("Password is valid.");
+            console.log("Password: " + password);
+        }}
