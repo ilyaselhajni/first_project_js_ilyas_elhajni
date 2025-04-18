@@ -45,5 +45,13 @@
             alert('Your email is invalid.');
         }
 
+        const age = prompt("Enter your age: ");
+        if (isNaN(age) || age.trim().length === 0 || age.trim().length >= 3) {
+            alert('Your age must be a number and contain 1 or 2 characters.');
+            const age = prompt("Enter your age: ");
+        } else {
+            alert('Your age is valid.');
+            console.log("Age: " + age.trim());
+        }
         
     }
