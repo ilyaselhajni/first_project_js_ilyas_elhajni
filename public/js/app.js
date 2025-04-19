@@ -107,4 +107,36 @@ if (action === "1" || action.toLowerCase() === "sign up") {
             alert("Login successful! Welcome back, " + userDatabase[email].fullName + ".");
         }
     }
+} else if (action === "3" || action.toLowerCase() === "change password") {
+    let email = prompt("Enter your registered email:");
+
+    email = email.trim().toLowerCase();
+
+    if (!userDatabase[email]) {
+        alert("Email not found in the database.");
+    } else {
+        let oldPassword = prompt("Enter your current password:");
+
+        if (oldPassword !== userDatabase[email].password) {
+            alert("Incorrect current password.");
+        } else {
+            let newPassword = prompt("Enter your new password:\n(Min 8 characters, 1 uppercase, 1 lowercase, 1 number)");
+
+            while (!isValidPassword(newPassword)) {
+                alert("Password does not meet the criteria.");
+                newPassword = prompt("Enter your new password again:");
+            }
+
+            let confirmNewPassword = prompt("Confirm your new password:");
+
+            while (confirmNewPassword !== newPassword) {
+                alert("New passwords do not match.");
+                confirmNewPassword = prompt("Confirm your new password again:");
+            }
+
+            userDatabase[email].password = newPassword;
+            saveToLocalStorage(); // save to local storage
+            alert("Password changed successfully!");
+        }
+    }
 } 
