@@ -6,7 +6,7 @@ function saveToLocalStorage() {
     localStorage.setItem("userDatabase", JSON.stringify(userDatabase));
 }
 
-// functions
+// used functions
 function capitalizeName(name) {
     return name
         .split(" ")
@@ -24,7 +24,8 @@ function isValidPassword(password) {
     return pattern.test(password);
 }
 
-const action = prompt("Choose an option:\n1. Sign Up\n2. Log In\n3. Change Password\n4. Exit");
+const action = prompt("Choose a number between the options:\n1. Sign Up\n2. Log In\n3. Change Password\n4. Exit");
+
 
 if (action === "1" || action.toLowerCase() === "sign up") {
     let fullName = prompt("Enter your full name:");
@@ -87,7 +88,7 @@ if (action === "1" || action.toLowerCase() === "sign up") {
             password: password
         };
 
-        saveToLocalStorage(); // save to local storage
+        saveToLocalStorage(); 
         alert("Sign Up Successful!");
         console.log("User saved:", userDatabase[email]);
     }
@@ -135,8 +136,13 @@ if (action === "1" || action.toLowerCase() === "sign up") {
             }
 
             userDatabase[email].password = newPassword;
-            saveToLocalStorage(); // save to local storage
+            saveToLocalStorage(); 
             alert("Password changed successfully!");
         }
     }
-} 
+}
+    
+    else if (action === "4" || action.toLowerCase() === "exit") {
+        alert("Exiting the current process. You can choose an option again.");
+        location.reload(); 
+    }
