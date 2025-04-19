@@ -1,8 +1,12 @@
 
-let userDatabase = {};
+let userDatabase = JSON.parse(localStorage.getItem("userDatabase")) || {};
 
 
-// functions 
+function saveToLocalStorage() {
+    localStorage.setItem("userDatabase", JSON.stringify(userDatabase));
+}
+
+// functions
 function capitalizeName(name) {
     return name
         .split(" ")
@@ -20,9 +24,7 @@ function isValidPassword(password) {
     return pattern.test(password);
 }
 
-
 const action = prompt("Choose an option:\n1. Sign Up\n2. Log In\n3. Change Password\n4. Exit");
-
 
 if (action === "1" || action.toLowerCase() === "sign up") {
     let fullName = prompt("Enter your full name:");
@@ -40,7 +42,6 @@ if (action === "1" || action.toLowerCase() === "sign up") {
     while (!isValidEmail(email)) {
         alert("Please enter a valid email.");
         email = prompt("Enter your email again:");
-        
     }
     console.log("Email:", email);
     alert("Valid email entered.");
@@ -60,22 +61,41 @@ if (action === "1" || action.toLowerCase() === "sign up") {
 
         // password
         let password = prompt("Enter your password:\n(Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number)");
-            while (isValidPassword(password)) {
-                alert("Invalid password format.");
-                password = prompt("Enter your password again:");
-            }
-        
-            alert("Password is valid.");
-            console.log("Password: " + password);
-        
-            // confirm password
-            let confirmPassword = prompt("Confirm your password:");
-            while (confirmPassword !== password) {
-                alert("Passwords do not match.");
-                confirmPassword = prompt("Confirm your password again:");
-            }
-        
-            alert("Password confirmed.");
-            console.log("Confirmed Password: " + confirmPassword);
+        while (isValidPassword(password)) {
+            alert("Invalid password format.");
+            password = prompt("Enter your password again:");
+        }
+    
+        alert("Password is valid.");
+        console.log("Password: " + password);
 
-        }}
+        // confirm password
+        let confirmPassword = prompt("Confirm your password:");
+        while (confirmPassword !== password) {
+            alert("Passwords do not match.");
+            confirmPassword = prompt("Confirm your password again:");
+        }
+
+        alert("Password confirmed.");
+        console.log("Confirmed Password: " + confirmPassword);
+
+        // save to database
+        userDatabase[email] = {
+            fullName: fullName,
+            email: email,
+            age: age,
+            password: password
+        };
+
+        saveToLocalStorage(); // save to local storage
+        alert("Sign Up Successful!");
+        console.log("User saved:", userDatabase[email]);
+    }
+} else if (action === "2" || action.toLowerCase() === "log in") {
+    let email = prompt("Enter your registered email:");
+
+    email = email.trim().toLowerCase();
+
+    if (!userDatabase[email]) {
+        alert("Email not found in the database.");
+    }}
