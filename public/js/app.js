@@ -98,4 +98,13 @@ if (action === "1" || action.toLowerCase() === "sign up") {
 
     if (!userDatabase[email]) {
         alert("Email not found in the database.");
-    }}
+    } else {
+        let password = prompt("Enter your password:");
+
+        if (password !== userDatabase[email].password) {
+            alert("Incorrect password.");
+        } else {
+            alert("Login successful! Welcome back, " + userDatabase[email].fullName + ".");
+        }
+    }
+} 
